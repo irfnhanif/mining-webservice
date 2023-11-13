@@ -31,7 +31,7 @@ $router->group(['prefix' => 'equipments/{equipmentId}'], function () use ($route
     $router->delete('', ['as' => 'deleteEquipment', 'uses' => 'EquipmentController@destroy']);
 });
 
-$router->group(['prefix' => 'equipments/{equipmentId}maintenances'], function () use ($router) {
+$router->group(['prefix' => 'equipments/{equipmentId}/maintenances'], function () use ($router) {
     $router->get('', ['as' => 'getMaintenances', 'uses' => 'MaintenanceController@index']);
 
     $router->post('', ['as' => 'createMaintenance', 'uses' => 'MaintenanceController@store']);
