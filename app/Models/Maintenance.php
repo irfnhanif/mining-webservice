@@ -12,6 +12,8 @@ class Maintenance extends Model
         'datetime', 'duration', 'cost', 'location', 'equipment_id'
     ];
 
+    protected $table = 'maintenances';
+
     public function equipment(): BelongsTo
     {
         return $this->belongsTo(Equipment::class);
