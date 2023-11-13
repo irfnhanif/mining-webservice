@@ -11,6 +11,8 @@ class Equipment extends Model
         'name', 'type', 'status', 'location'
     ];
 
+    protected $table = 'equipments';
+    
     public function maintenances(): HasMany 
     {
         return $this->hasMany(Maintenance::class);

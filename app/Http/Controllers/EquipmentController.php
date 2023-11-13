@@ -14,7 +14,14 @@ class EquipmentController extends Controller
      */
     public function index()
     {
-        //
+        $equipments = Equipment::all();
+        return response()->json([
+            'success' => true,
+            'message' => 'All Equipments data grabbed',
+            'data' => [
+                'equipments' => $equipments,
+            ]
+        ], 200);
     }
 
 
@@ -35,9 +42,9 @@ class EquipmentController extends Controller
      * @param  \App\Models\Equipment  $equipment
      * @return \Illuminate\Http\Response
      */
-    public function show(Equipment $equipment)
+    public function show(Request $request,Equipment $equipment)
     {
-        //
+        $equipment = Equipment::find($request->equipmentId);
     }
 
     /**
