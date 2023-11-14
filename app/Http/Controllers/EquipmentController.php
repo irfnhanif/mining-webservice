@@ -33,7 +33,19 @@ class EquipmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $equipment = Equipment::create([
+            'name' => $request->name,
+            'type' => $request->type,
+            'status' => $request->status,
+            'location' => $request->location
+        ]);
+        return response()->json([
+            'success' => 'Success',
+            'message' => 'New Equipment Data Inserted',
+            'data' => [
+                'equipment' => $equipment
+            ]
+        ], 200);
     }
 
     /**
@@ -42,9 +54,23 @@ class EquipmentController extends Controller
      * @param  \App\Models\Equipment  $equipment
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request,Equipment $equipment)
+    public function show(Request $request, Equipment $equipment)
     {
         $equipment = Equipment::find($request->equipmentId);
+        return response()->json([
+            'success' => 'Success',
+            'message' => 'Equipment data grabbed',
+            'data' => [
+                'equipment' => [
+                    'id' => $equipment->id,
+                    'name' => $equipment->name,
+                    'type' => $equipment->type,
+                    'status' => $equipment->status,
+                    'location' => $equipment->location,
+                    'maintenances' => $equipment->maintenances,
+                ]
+            ]
+        ], 200);
     }
 
     /**
@@ -56,7 +82,21 @@ class EquipmentController extends Controller
      */
     public function update(Request $request, Equipment $equipment)
     {
-        //
+        $equipment = Equipment::find($request->equipmentId);
+
+        $equipment->name = $request->name;
+        $equipment->type = $request->type;
+        $equipment->status = $request->status;
+        $equipment->location = $request->location;
+
+        $equipment->save();
+        return response()->json([
+            'success' => 'Success',
+            'message' => 'Equipment Data Updated',
+            'data' => [
+                'equipment' => $equipment
+            ]
+        ], 200);
     }
 
     /**
@@ -65,8 +105,13 @@ class EquipmentController extends Controller
      * @param  \App\Models\Equipment  $equipment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Equipment $equipment)
+    public function destroy($equipmentId)
     {
-        //
+        $equipment = Equipment::find($equipmentId);
+        $equipment->delete();
+        return response()->json([
+            'success' => 'Success',
+            'message' => 'Equipment Data Updated'
+        ], 200);
     }
 }

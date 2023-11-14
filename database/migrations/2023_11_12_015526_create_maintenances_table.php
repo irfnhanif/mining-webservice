@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('maintenances', function (Blueprint $table) {
             $table->id();
+            $table->timestamps();
             $table->date('datetime');
             $table->integer('duration');
             $table->float('cost');
