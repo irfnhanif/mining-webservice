@@ -17,7 +17,7 @@ class EquipmentController extends Controller
         $equipments = Equipment::all();
         return response()->json([
             'success' => true,
-            'message' => 'All Equipments data grabbed',
+            'message' => 'Grabbed all equipments data',
             'data' => [
                 'equipments' => $equipments,
             ]
@@ -41,7 +41,7 @@ class EquipmentController extends Controller
         ]);
         return response()->json([
             'success' => 'Success',
-            'message' => 'New Equipment Data Inserted',
+            'message' => 'Inserted new equipment',
             'data' => [
                 'equipment' => $equipment
             ]
@@ -59,7 +59,7 @@ class EquipmentController extends Controller
         $equipment = Equipment::find($request->equipmentId);
         return response()->json([
             'success' => 'Success',
-            'message' => 'Equipment data grabbed',
+            'message' => 'Grabbed one equipment data',
             'data' => [
                 'equipment' => [
                     'id' => $equipment->id,
@@ -92,7 +92,7 @@ class EquipmentController extends Controller
         $equipment->save();
         return response()->json([
             'success' => 'Success',
-            'message' => 'Equipment Data Updated',
+            'message' => 'Updated equipment data',
             'data' => [
                 'equipment' => $equipment
             ]
@@ -111,7 +111,7 @@ class EquipmentController extends Controller
         $equipment->delete();
         return response()->json([
             'success' => 'Success',
-            'message' => 'Equipment Data Updated'
+            'message' => 'Deleted equipment data'
         ], 200);
     }
 }
