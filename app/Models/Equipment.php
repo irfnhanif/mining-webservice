@@ -12,7 +12,8 @@ class Equipment extends Model
     ];
 
     protected $table = 'equipments';
-    
+    public $timestamps = false;
+
     public function maintenances(): HasMany 
     {
         return $this->hasMany(Maintenance::class);

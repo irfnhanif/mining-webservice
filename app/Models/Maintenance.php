@@ -13,6 +13,7 @@ class Maintenance extends Model
     ];
 
     protected $table = 'maintenances';
+    public $timestamps = false;
 
     public function equipment(): BelongsTo
     {
