@@ -41,7 +41,7 @@ class EquipmentController extends Controller
         ]);
         return response()->json([
             'success' => 'Success',
-            'message' => 'Inserted new equipment',
+            'message' => 'Inserted new equipment data',
             'data' => [
                 'equipment' => $equipment
             ]
@@ -67,7 +67,6 @@ class EquipmentController extends Controller
                     'type' => $equipment->type,
                     'status' => $equipment->status,
                     'location' => $equipment->location,
-                    'maintenances' => $equipment->maintenances,
                 ]
             ]
         ], 200);
@@ -105,10 +104,9 @@ class EquipmentController extends Controller
      * @param  \App\Models\Equipment  $equipment
      * @return \Illuminate\Http\Response
      */
-    public function destroy($equipmentId)
+    public function destroy(Request $request)
     {
-        $equipment = Equipment::find($equipmentId);
-        $equipment->delete();
+        $equipment = Equipment::find($request->equipmentId)->delete();
         return response()->json([
             'success' => 'Success',
             'message' => 'Deleted equipment data'

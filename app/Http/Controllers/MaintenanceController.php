@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Equipment;
 use App\Models\Maintenance;
 use Illuminate\Http\Request;
 
@@ -12,9 +13,21 @@ class MaintenanceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $maintenances = Maintenance::where("equipment_id", $request->equipmentId)->get();
+        return response()->json([
+            'success' => 'Success',
+            'message' => 'Grabbed all maintenances data',
+            'data' => [
+                'equipment' => [
+                    'id' => $maintenances[0]->equipment->id,
+                    'name' => $maintenances[0]->equipment->name,
+                    'type' => $maintenances[0]->equipment->type,
+                    'maintenances' => $maintenances->makeHidden(['equipment_id', 'equipment'])
+                ]
+            ]
+        ], 200);
     }
 
     /**
@@ -25,7 +38,19 @@ class MaintenanceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $maintenance = Maintenance::create([
+            'datetime' => $request->datetime,
+            'duration' => $request->duration,
+            'cost' => $request->cost,
+            'equipment_id' => (int) $request->equipmentId
+        ]);
+        return response()->json([
+            'success' => 'Success',
+            'message' => 'Inserted new maintenance data',
+            'data' => [
+                'maintenance' => $maintenance
+            ]
+        ], 200);
     }
 
     /**
@@ -34,9 +59,26 @@ class MaintenanceController extends Controller
      * @param  \App\Models\Maintenance  $maintenance
      * @return \Illuminate\Http\Response
      */
-    public function show(Maintenance $maintenance)
+    public function show(Request $request)
     {
-        //
+        $maintenance = Maintenance::where("equipment_id", $request->equipmentId)->find($request->maintenanceId);
+        return response()->json([
+            'success' => 'Success',
+            'message' => 'Grabbed one maintenance data',
+            'data' => [
+                'maintenance' => [
+                    'id'=> $maintenance->id,
+                    'datetime'=> $maintenance->datetime,
+                    'duration' => $request->duration,
+                    'cost' => $request->cost,
+                    'equipment' => [
+                        'id' => $maintenance->equipment->id,
+                        'name' => $maintenance->equipment->name,
+                        'type' => $maintenance->equipment->type,
+                    ],
+                ]
+            ]
+        ], 200);
     }
 
     /**
