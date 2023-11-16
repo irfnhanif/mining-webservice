@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Maintenance extends Model
 {
     protected $fillable = [
-        'datetime', 'duration', 'cost', 'location', 'equipment_id'
+        'datetime', 'duration', 'cost', 'equipment_id'
     ];
 
     protected $table = 'maintenances';

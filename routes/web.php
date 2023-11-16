@@ -19,28 +19,22 @@ $router->get('/', function () use ($router) {
 
 $router->group(['prefix' => 'equipments'], function () use ($router) {
     $router->get('', ['as'=> 'getEquipments','uses'=> 'EquipmentController@index']);
-
     $router->post('', ['as' => 'createEquipment', 'uses' => 'EquipmentController@store']);
 });
 
 $router->group(['prefix' => 'equipments/{equipmentId}'], function () use ($router) {
     $router->get('', ['as' => 'getOneEquipment', 'uses' => 'EquipmentController@show']);
-
     $router->put('', ['as' => 'updateEquipment', 'uses' => 'EquipmentController@update']);
-
     $router->delete('', ['as' => 'deleteEquipment', 'uses' => 'EquipmentController@destroy']);
 });
 
 $router->group(['prefix' => 'equipments/{equipmentId}/maintenances'], function () use ($router) {
     $router->get('', ['as' => 'getMaintenances', 'uses' => 'MaintenanceController@index']);
-
     $router->post('', ['as' => 'createMaintenance', 'uses' => 'MaintenanceController@store']);
 });
 
 $router->group(['prefix' => 'equipments/{equipmentId}/maintenances/{maintenanceId}'], function () use ($router) {
     $router->get('', ['as' => 'getOneMaintenance', 'uses' => 'MaintenanceController@show']);
-
     $router->put('', ['as' => 'updateMaintenance', 'uses' => 'MaintenanceController@update']);
-
     $router->delete('', ['as' => 'deleteMaintenance', 'uses' => 'MaintenanceController@destroy']);
 });
