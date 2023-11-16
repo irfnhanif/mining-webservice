@@ -61,7 +61,7 @@ class MaintenanceController extends Controller
      */
     public function show(Request $request)
     {
-        $maintenance = Maintenance::where("equipment_id", $request->equipmentId)->find($request->maintenanceId);
+        $maintenance = Maintenance::find($request->maintenanceId);
         return response()->json([
             'success' => 'Success',
             'message' => 'Grabbed one maintenance data',
@@ -88,9 +88,22 @@ class MaintenanceController extends Controller
      * @param  \App\Models\Maintenance  $maintenance
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Maintenance $maintenance)
+    public function update(Request $request)
     {
-        //
+        $maintenance = Maintenance::find($request->maintenanceId);
+
+        $maintenance->datetime = $request->datetime;
+        $maintenance->duration = $request->duration;
+        $maintenance->cost = $request->cost;
+
+        $maintenance->save();
+        return response()->json([
+            'success' => 'Success',
+            'message' => 'Updated maintenance data',
+            'data' => [
+                'maintenance' => $maintenance
+            ]
+        ], 200);
     }
 
     /**
@@ -99,8 +112,12 @@ class MaintenanceController extends Controller
      * @param  \App\Models\Maintenance  $maintenance
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Maintenance $maintenance)
+    public function destroy(Request $request)
     {
-        //
+        $maintenance = Maintenance::find($request->maintenanceId)->delete();
+        return response()->json([
+            'success' => 'Success',
+            'message' => 'Deleted maintenance data'
+        ], 200);
     }
 }
