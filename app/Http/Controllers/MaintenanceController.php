@@ -16,6 +16,14 @@ class MaintenanceController extends Controller
     public function index(Request $request)
     {
         $maintenances = Maintenance::where("equipment_id", $request->equipmentId)->get();
+
+        if (!$maintenances) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Maintenances data not found',
+            ], 404);
+        }
+
         return response()->json([
             'success' => 'Success',
             'message' => 'Grabbed all maintenances data',
@@ -38,12 +46,20 @@ class MaintenanceController extends Controller
      */
     public function store(Request $request)
     {
+
+        $this->validate($request, [
+            'datetime' => 'required|date',
+            'duration' => 'required|integer',
+            'cost' => 'required|numeric',
+        ]);
+
         $maintenance = Maintenance::create([
             'datetime' => $request->datetime,
             'duration' => $request->duration,
             'cost' => $request->cost,
             'equipment_id' => (int) $request->equipmentId
         ]);
+
         return response()->json([
             'success' => 'Success',
             'message' => 'Inserted new maintenance data',
@@ -62,6 +78,14 @@ class MaintenanceController extends Controller
     public function show(Request $request)
     {
         $maintenance = Maintenance::find($request->maintenanceId);
+
+        if (!$maintenance) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Maintenance data not found',
+            ], 404);
+        }
+
         return response()->json([
             'success' => 'Success',
             'message' => 'Grabbed one maintenance data',
@@ -92,11 +116,25 @@ class MaintenanceController extends Controller
     {
         $maintenance = Maintenance::find($request->maintenanceId);
 
+        if (!$maintenance) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Maintenance data not found',
+            ], 404);
+        }
+
+        $this->validate($request, [
+            'datetime' => 'required|date',
+            'duration' => 'required|integer',
+            'cost' => 'required|numeric',
+        ]);
+
         $maintenance->datetime = $request->datetime;
         $maintenance->duration = $request->duration;
         $maintenance->cost = $request->cost;
 
         $maintenance->save();
+
         return response()->json([
             'success' => 'Success',
             'message' => 'Updated maintenance data',
@@ -115,6 +153,14 @@ class MaintenanceController extends Controller
     public function destroy(Request $request)
     {
         $maintenance = Maintenance::find($request->maintenanceId)->delete();
+
+        if (!$maintenance) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Maintenance data not found',
+            ], 404);
+        }
+
         return response()->json([
             'success' => 'Success',
             'message' => 'Deleted maintenance data'

@@ -15,6 +15,14 @@ class EquipmentController extends Controller
     public function index()
     {
         $equipments = Equipment::all();
+
+        if (!$equipments) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Equipments data not found',
+            ], 404);
+        }
+
         return response()->json([
             'success' => true,
             'message' => 'Grabbed all equipments data',
@@ -33,6 +41,13 @@ class EquipmentController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'name' => 'required|string',
+            'type' => 'required|string',
+            'status' => 'required|string',
+            'location' => 'required|string',
+        ]);
+
         $equipment = Equipment::create([
             'name' => $request->name,
             'type' => $request->type,
@@ -54,9 +69,17 @@ class EquipmentController extends Controller
      * @param  \App\Models\Equipment  $equipment
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, Equipment $equipment)
+    public function show(Request $request)
     {
         $equipment = Equipment::find($request->equipmentId);
+
+        if (!$equipment) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Equipment data not found',
+            ], 404);
+        }
+
         return response()->json([
             'success' => 'Success',
             'message' => 'Grabbed one equipment data',
@@ -79,9 +102,23 @@ class EquipmentController extends Controller
      * @param  \App\Models\Equipment  $equipment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Equipment $equipment)
+    public function update(Request $request)
     {
         $equipment = Equipment::find($request->equipmentId);
+
+        if (!$equipment) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Equipment data not found',
+            ], 404);
+        }
+
+        $this->validate($request, [
+            'name' => 'required|string',
+            'type' => 'required|string',
+            'status' => 'required|string',
+            'location' => 'required|string',
+        ]);
 
         $equipment->name = $request->name;
         $equipment->type = $request->type;
@@ -107,6 +144,14 @@ class EquipmentController extends Controller
     public function destroy(Request $request)
     {
         $equipment = Equipment::find($request->equipmentId)->delete();
+
+        if (!$equipment) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Equipment data not found',
+            ], 404);
+        }
+
         return response()->json([
             'success' => 'Success',
             'message' => 'Deleted equipment data'
