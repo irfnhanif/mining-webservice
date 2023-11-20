@@ -38,3 +38,14 @@ $router->group(['prefix' => 'equipments/{equipmentId}/maintenances/{maintenanceI
     $router->put('', ['as' => 'updateMaintenance', 'uses' => 'MaintenanceController@update']);
     $router->delete('', ['as' => 'deleteMaintenance', 'uses' => 'MaintenanceController@destroy']);
 });
+
+$router->group(['prefix' => 'equipments/{equipmentId}/sensors'], function () use ($router) {
+    $router->get('', ['as' => 'getSensors', 'uses' => 'SensorController@index']);
+    $router->post('', ['as' => 'createSensor', 'uses' => 'SensorController@store']);
+});
+
+$router->group(['prefix' => 'equipments/{equipmentId}/sensors/{sensorId}'], function () use ($router) {
+    $router->get('', ['as' => 'getOneSensor', 'uses' => 'SensorController@show']);
+    $router->put('', ['as' => 'updateSensor', 'uses' => 'SensorController@update']);
+    $router->delete('', ['as' => 'deleteSensor', 'uses' => 'SensorController@destroy']);
+});
