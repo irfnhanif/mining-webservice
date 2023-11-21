@@ -25,7 +25,7 @@ class MaintenanceController extends Controller
         }
 
         return response()->json([
-            'success' => 'Success',
+            'success' => true,
             'message' => 'Grabbed all maintenances data',
             'data' => [
                 'equipment' => [
@@ -61,7 +61,7 @@ class MaintenanceController extends Controller
         ]);
 
         return response()->json([
-            'success' => 'Success',
+            'success' => true,
             'message' => 'Inserted new maintenance data',
             'data' => [
                 'maintenance' => $maintenance
@@ -87,7 +87,7 @@ class MaintenanceController extends Controller
         }
 
         return response()->json([
-            'success' => 'Success',
+            'success' => true,
             'message' => 'Grabbed one maintenance data',
             'data' => [
                 'maintenance' => [
@@ -136,7 +136,7 @@ class MaintenanceController extends Controller
         $maintenance->save();
 
         return response()->json([
-            'success' => 'Success',
+            'success' => true,
             'message' => 'Updated maintenance data',
             'data' => [
                 'maintenance' => $maintenance
@@ -152,7 +152,7 @@ class MaintenanceController extends Controller
      */
     public function destroy(Request $request)
     {
-        $maintenance = Maintenance::find($request->maintenanceId)->delete();
+        $maintenance = Maintenance::find($request->maintenanceId);
 
         if (!$maintenance) {
             return response()->json([
@@ -161,8 +161,10 @@ class MaintenanceController extends Controller
             ], 404);
         }
 
+        $maintenance->delete();
+
         return response()->json([
-            'success' => 'Success',
+            'success' => true,
             'message' => 'Deleted maintenance data'
         ], 200);
     }
