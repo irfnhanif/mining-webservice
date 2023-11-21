@@ -46,6 +46,7 @@ $router->group(['prefix' => 'equipments/{equipmentId}/sensors'], function () use
 
 $router->group(['prefix' => 'equipments/{equipmentId}/sensors/{sensorId}'], function () use ($router) {
     $router->get('', ['as' => 'getOneSensor', 'uses' => 'SensorController@show']);
+    $router->post('', ['as'=> 'createSensorData', 'uses'=> 'SensorController@storeData']);
     $router->put('', ['as' => 'updateSensor', 'uses' => 'SensorController@update']);
     $router->delete('', ['as' => 'deleteSensor', 'uses' => 'SensorController@destroy']);
 });
