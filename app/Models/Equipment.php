@@ -18,4 +18,9 @@ class Equipment extends Model
     {
         return $this->hasMany(Maintenance::class);
     }
+
+    public function sensors(): HasMany
+    {
+        return $this->hasMany(Sensor::class);
+    }
 }
