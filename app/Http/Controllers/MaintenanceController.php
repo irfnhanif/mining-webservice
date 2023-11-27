@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Equipment;
 use App\Models\Maintenance;
 use Illuminate\Http\Request;
 
