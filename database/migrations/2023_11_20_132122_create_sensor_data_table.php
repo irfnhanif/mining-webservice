@@ -17,6 +17,8 @@ return new class extends Migration
             $table->integer('utilization');
             $table->unsignedBigInteger('sensor_id');
             $table->foreign('sensor_id')->references('id')->on('sensors');
+            $table->unsignedBigInteger('equipment_id');
+            $table->foreign('equipment_id')->references('id')->on('equipments');
             $table->timestamps();
         });
     }
